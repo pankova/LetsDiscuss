@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Questions
+{% endblock %}
+
+{% block main %}
+<script type="module" src="{{ url_for('static', filename='js/partner_link.js') }}"></script>
+
+<h1>Questions</h1>
+
+{% if link %}
+<p>{{ name }}, answers the questions below. Don't forget to send the link to your partner to discuss the chosen options
+</p>
+<p id="partner-link">{{ link }}</p>
+<button class="btn btn-primary btn-sm" id="copy-btn">Copy</button>
+{% else %}
+<p>{{ name }}, answers the questions below to discuss them with your partner</p>
+{% endif %}
+
+<!-- <form action="/questions" method="post">
+    {% for section in sections %}
+    <table class="table">
+        <thead class="table-light">
+            <tr>
+                <td class="border-0 fw-bold text-end" colspan="4">{{ section.text }}</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in section.questions %}
+            <tr>
+                <td>{{ question.text }}</td>
+                {% for option in options %}
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="{{ option.id }}">
+                        <label class="form-check-label" for="{{ option.id }}">{{ option.text }}</label>
+                    </div>
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endfor %}
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form> -->
+
+
+<form action="/questions" method="post">
+    {% for section in sections %}
+    <fieldset>
+        <legend>{{ section.text }}</legend>
+        {% for question in section.questions %}
+        <div class="form-group">
+            <label>{{ question.text }}</label>
+            {% for option in options %}
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="{{ question.id }}" value="{{ option.id }}">
+                <label class="form-check-label" for="{{ option.id }}">{{ option.text }}</label>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </fieldset>
+    {% endfor %}
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Results
+{% endblock %}
+
+{% block main %}
+<script type="module" src="{{ url_for('static', filename='js/partner_link.js') }}"></script>
+
+<h1>Results</h1>
+
+{% if link %}
+<p>{{ result.user_name }}, below there are your answers. Send the link to your partner to discuss the chosen options</p>
+<p id="partner-link">{{ link }}</p>
+<button class="btn btn-primary btn-sm" id="copy-btn">Copy</button>
+{% else %}
+<p>{{ result.user_name }}, below there are your and your partner's answers. You can discuss them</p>
+{% endif %}
+
+<table class="table">
+
+    <thead class="table-light">
+        <tr>
+            <td class="border-0 fw-bold text-end" colspan="4">{{ result.user_name }}</td>
+            <td class="border-0 fw-bold text-end" colspan="4">{{ result.partner_name }}</td>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for section in result.sectionAnswers %}
+            <thead class="table-light">
+                <tr>
+                    <td class="border-0 fw-bold text-end" colspan="4">{{ section.title }}</td>
+                </tr>
+            </thead>
+
+            {% for answers in section.answers %}
+            <tr>
+                <td>{{ answers.question_text }}</td>
+                <td>{{ answers.user_answer }}</td>
+                <td>{{ answers.partner_answer }}</td>
+            </tr>
+            {% endfor %}
+
+        {% endfor %}
+    </tbody>
+
+</table>
+
+<form action="/results/save" method="get">
+    <button class="btn btn-primary" type="submit">Save</button>
+</form>
+
+{% endblock %}

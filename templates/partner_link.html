@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Partner's Invite
+{% endblock %}
+
+{% block main %}
+
+<script type="module" src="{{ url_for('static', filename='js/partner_link.js') }}"></script>
+
+<div class="mb-3">
+
+    <p>Great! {{ name }}, below there is your unique Link you can share with partner. After finishing questionnaire
+        you’ll be able to discuss your answers</p>
+    <p id="partner-link">{{ link }}</p>
+    <p class="text-muted">Share with your partner to discuss</p>
+
+    <button class="btn btn-primary btn-sm" id="copy-btn">Copy</button>
+
+</div>
+
+<form action="/questions" method="get">
+    <button class="btn btn-primary" type="submit">Next</button>
+</form>
+
+{% endblock %}

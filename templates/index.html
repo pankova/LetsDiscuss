@@ -1,1 +1,18 @@
-<h1>Here we are</h1>
+{% extends "layout.html" %}
+
+{% block title %}
+Hello
+{% endblock %}
+
+{% block main %}
+
+<h1>Hello</h1>
+
+<p>We start relationships with different expectations and vision of duties.This questionnaire can help you discuss the
+    thing on the beach and understand expectations of each over</p>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script type="module" src="{{ url_for('static', filename='js/auth.js') }}"></script>
+<div id="buttonDiv"></div>
+
+{% endblock %}

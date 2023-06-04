@@ -1,0 +1,42 @@
+/* :root { 
+    --primary-color: #9DC710;
+    --secondary-color: #3A10C7; 
+}
+
+button,
+input[type="submit"] {
+    background-color: var(--primary-color);
+    border-radius: 40;
+    font-family: 'Open Sans';
+    font-size: 32;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input[type="text"]:hover,
+input[list]:hover {
+    background-color: #f5f5f5;
+    transition: color 2s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.cell_positive
+{
+    color: var(--correct-color);
+}
+
+.cell_negative
+{
+    color: var(--error-color);
+} */
+
+.show {
+  display: block !important;
+}
+.hidden {
+  display: none !important;
+}
+.invisible {
+  visibility: hidden;
+}
