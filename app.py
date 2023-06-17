@@ -9,6 +9,11 @@ from google.auth.transport import requests
 from urllib.parse import urlencode
 import hashlib
 import os
+from dotenv import load_dotenv
+import socket
+
+# Load the environment variables from the .env file
+load_dotenv()
 
 CLIENT_ID = os.getenv('CLIENT_ID')
 DB_PATH = os.getenv('DB_PATH')
@@ -140,6 +145,11 @@ def db_user_partner_answers():
     return db.execute("SELECT * FROM results WHERE user_id=?", db_user_partner())
 
 
+def is_local_computer():
+    hostname = socket.gethostname()
+    return hostname == 'localhost' or hostname == '127.0.0.1'
+
+
 # define decorator to add CSP header
 @app.after_request
 def add_security_headers(resp):
@@ -164,6 +174,12 @@ def get_client_id():
 
 @app.route("/", methods=["GET"])
 def home():
+    if is_local_computer():
+        mock_user = User("Tom", "123456789")
+        session_save_user(mock_user)
+        if (not is_user_registered()):
+            db_save_user(mock_user)
+            
     return render_template("index.html")
 
 

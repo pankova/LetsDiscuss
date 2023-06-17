@@ -2,3 +2,6 @@ __pycache__
 flask_session
 var.env
 questionnaire.db
+.venv
+.env
+launch.json
