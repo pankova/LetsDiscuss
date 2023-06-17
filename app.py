@@ -146,16 +146,12 @@ def db_options():
     return db.execute("SELECT * FROM options")
 
 
-def db_user_answers():
+def db_user_answers_by_id(id):
     results_list = db.execute(
-        "SELECT question_id, option_id FROM results WHERE user_id = ?", db_user_id()
+        "SELECT question_id, option_id FROM results WHERE user_id = ?", id
     )
     results_dict = {result['question_id']: result['option_id'] for result in results_list}
     return results_dict
-
-
-def db_partner_answers():
-    return db.execute("SELECT * FROM results WHERE user_id=?", db_partner_id())
 
 
 def is_local_computer():
@@ -276,7 +272,7 @@ def questions():
 
 @app.route("/results", methods=["GET"])
 def results():
-    user_answers = db_user_answers()
+    user_answers = db_user_answers_by_id(db_user_id())
     options = {option['id']: option['text'] for option in db_options()}
 
     partner_name = "💖"
@@ -286,7 +282,7 @@ def results():
     link = None
     partner_answers = {}
     if is_user_partner_answered():
-        partner_answers = db_partner_answers()
+        partner_answers = db_user_answers_by_id(db_partner_id())
     else:
         link = create_user_partner_link()
 
