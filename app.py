@@ -66,14 +66,27 @@ def create_user_partner_link():
     return full_url
 
 
-def db_save_user(user):
+def db_update_user(user):
+    partner_id = user.partner_id
+
+    if is_user_registered and not partner_id:
+        return
+    
     name = user.name
     hash = user.hash 
-    partner_id = user.partner_id
     if not partner_id:
-        db.execute("INSERT INTO users (name, hash) VALUES (?, ?);", name, hash)
+        db.execute(
+                "INSERT INTO users (name, hash) VALUES (?, ?)",
+                name,
+                hash
+            )
     else:
-        db.execute("INSERT INTO users (name, hash, partner_id) VALUES (?, ?, ?);", name, hash, partner_id)
+        db.execute(
+                "INSERT OR REPLACE INTO users (name, hash, partner_id) VALUES (?, ?, ?)",
+                name,
+                hash,
+                partner_id
+            )
 
 
 def is_user_registered():
@@ -88,23 +101,23 @@ def is_user_with_partner():
     return len(db.execute("SELECT partner_id FROM users WHERE hash=(?) AND partner_id IS NOT NULL LIMIT 1", user_hash())) > 0
 
 
-def db_user_partner():
+def db_partner_id():
     return get_subscript(
         get_element(db.execute("SELECT partner_id FROM users WHERE hash=? LIMIT 1", user_hash()), 0),
-        'id'
+        'partner_id'
     )
 
 
 def db_partner_name():
     return get_subscript(
-        get_element(db.execute("SELECT name FROM users WHERE id=? LIMIT 1", db_user_partner()), 0),
+        get_element(db.execute("SELECT name FROM users WHERE id=? LIMIT 1", db_partner_id()), 0),
         'name'
     )
 
 def is_user_partner_answered():
     if not is_user_with_partner():
         return False
-    partner_id = db_user_partner()
+    partner_id = db_partner_id()
 
     return len(db.execute("SELECT * FROM results WHERE user_id=(?) LIMIT 1", partner_id)) > 0
 
@@ -141,13 +154,25 @@ def db_user_answers():
     return results_dict
 
 
-def db_user_partner_answers():
-    return db.execute("SELECT * FROM results WHERE user_id=?", db_user_partner())
+def db_partner_answers():
+    return db.execute("SELECT * FROM results WHERE user_id=?", db_partner_id())
 
 
 def is_local_computer():
     hostname = socket.gethostname()
-    return hostname == 'localhost' or hostname == '127.0.0.1'
+    return "local" in hostname
+
+
+def session_save_user(user):
+    session["user_name"] = user.name
+    session["user_hash"] = user.hash
+    # Check
+    session["user"] = user
+
+
+def save_user(user):
+    session_save_user(user)
+    db_update_user(user)
 
 
 # define decorator to add CSP header
@@ -175,12 +200,27 @@ def get_client_id():
 @app.route("/", methods=["GET"])
 def home():
     if is_local_computer():
-        mock_user = User("Tom", "123456789")
-        session_save_user(mock_user)
-        if (not is_user_registered()):
-            db_save_user(mock_user)
+        mock_user = User("Tom", "123456789", 1)
+        save_user(mock_user)
             
     return render_template("index.html")
+
+
+def db_user_id_by(hash):
+    return get_subscript(
+        get_element(db.execute("SELECT id FROM users WHERE hash=? LIMIT 1", hash), 0),
+        'id'
+    )
+
+def save_partner(partner_hash):
+    partner_id = db_user_id_by(hash)
+    session["user_partner_id"] = partner_id
+
+
+@app.route("/partner_hash>", methods=["GET"])
+def handle_partner(partner_hash):
+    save_partner(partner_hash)
+    return redirect("/")
 
 
 @app.route("/partner_link", methods=["GET"])
@@ -246,7 +286,7 @@ def results():
     link = None
     partner_answers = {}
     if is_user_partner_answered():
-        partner_answers = db_user_partner_answers()
+        partner_answers = db_partner_answers()
     else:
         link = create_user_partner_link()
 
@@ -294,11 +334,9 @@ def process_data():
         user_name = payload['name']
         user_email = payload['email']
         user_hash = create_user_hash(user_email)
-        user = User(user_name, user_hash)
-        session_save_user(user)
-
-        if (not is_user_registered()):
-            db_save_user(user)
+        user_partner_id = session["user_partner_id"]
+        user = User(user_name, user_hash, user_partner_id)
+        save_user(user)
         return redirect(url_for('partner_link'))
         
     except ValueError as error:
@@ -308,14 +346,6 @@ def process_data():
         assert()
         print(f"Error: {error}")
         return redirect("/")
-        
-
-def session_save_user(user):
-    session["user_name"] = user.name
-    session["user_hash"] = user.hash
-    session["user_partner_id"] = user.partner_id
-    # Check
-    session["user"] = user
 
 
 def apology(message, code=400):
