@@ -12,8 +12,6 @@ function handleCredentialResponse(response) {
     },
     body: JSON.stringify(data)
   })
-    .then(response => response.json())
-    .then(data => console.log(data))
     .catch(error => {
       console.error('Error: /process_data ', error);
     });

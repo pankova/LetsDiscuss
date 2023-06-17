@@ -270,7 +270,8 @@ def process_data():
 
     jwt_token = data.get('token')
     if jwt_token is None:
-        return
+        print(f"Error: jwt_token is None")
+        return redirect("/")
     
     try:
         payload = retrieve_payload_from_JWT_token(jwt_token)
