@@ -10,13 +10,14 @@ from urllib.parse import urlencode
 import hashlib
 import os
 
-CLIENT_ID = os.environ.get('CLIENT_ID')
+CLIENT_ID = os.getenv('CLIENT_ID')
+DB_PATH = os.getenv('DB_PATH')
 
 # Configure app
 app = Flask(__name__, static_folder='static')
 
 # Connect to database
-db = SQL("sqlite:///questionnaire.db")
+db = SQL("sqlite:///" + DB_PATH + "questionnaire.db")
 
 # Configure session
 app.config["SESSION_PERMANENT"] = False
@@ -53,14 +54,11 @@ def create_user_hash(email):
 
 
 def create_user_partner_link():
-
     url = request.url_root 
-    params = {"param1": "value1", "param2": "value2"}
+    params = {"partner": user_hash()}
     query_string = urlencode(params)
     full_url = url + query_string
-
-    print(full_url)
-    return  + user_hash()
+    return full_url
 
 
 def db_save_user(user):
