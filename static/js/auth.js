@@ -1,4 +1,6 @@
 function handleCredentialResponse(response) {
+  console.log("Encoded JWT ID token: " + response.credential);
+
   const data = {
     'token': response.credential
   };

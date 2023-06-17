@@ -143,6 +143,17 @@ def db_user_partner_answers():
 # define decorator to add CSP header
 @app.after_request
 def add_security_headers(resp):
+    # To secure your app and prevent cross-site scripting (XSS) attacks
+    resp.headers['Content-Security-Policy'] = """
+        script-src https://accounts.google.com/gsi/client; 
+        frame-src https://accounts.google.com/gsi/; 
+        style-src https://accounts.google.com/gsi/style;
+        connect-src https://accounts.google.com/gsi/;
+    """.replace('\n', ' ')
+
+    # To allow Sign In With Google button and/or Google One Tap to function well with popup windows
+    resp.headers['Cross-Origin-Opener-Policy'] = "same-origin-allow-popups"
+
     return resp
 
 
