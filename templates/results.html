@@ -10,11 +10,13 @@ Results
 <h1>Results</h1>
 
 {% if link %}
-<p>{{ result.user_name }}, below there are your answers. Send the link to your partner to discuss the chosen options</p>
+<p>{{ result.user_name }}, here are your answers. 
+    <br><br>Share the link with your partner to discuss the chosen options.</p>
 <p id="partner-link">{{ link }}</p>
 <button class="btn btn-primary btn-sm" id="copy-btn">Copy</button>
 {% else %}
-<p>{{ result.user_name }}, below there are your and your partner's answers. You can discuss them</p>
+<p>{{ result.user_name }}, below are your answers as well as your partner's answers. 
+    <br><br>Grab a cup of tea or coffee and enjoy discussing them together.</p>
 {% endif %}
 
 <table class="table">
@@ -47,8 +49,8 @@ Results
 
 </table>
 
-<form action="/results/save" method="get">
+<!-- <form action="/results/save" method="get">
     <button class="btn btn-primary" type="submit">Save</button>
-</form>
+</form> -->
 
 {% endblock %}

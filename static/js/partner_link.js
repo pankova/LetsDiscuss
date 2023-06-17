@@ -9,5 +9,5 @@ copyBtn.addEventListener('click', () => {
         .catch(err => console.error("Failed to copy text: ", err));
 
     // Show a message to the user indicating that the link has been copied
-    alert('Partner link copied to clipboard!');
+    alert('Partner link copied!');
 });
