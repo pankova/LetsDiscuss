@@ -13,7 +13,7 @@ function handleCredentialResponse(response) {
     body: JSON.stringify(data)
   })
     .then(response => {
-      if (response.status === 302) {
+      if (response.status === 302 || response.status === 200) {
         // Navigate to the redirected URL
         window.location.href = response.url;  
       } else {
