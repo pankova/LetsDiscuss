@@ -12,6 +12,14 @@ function handleCredentialResponse(response) {
     },
     body: JSON.stringify(data)
   })
+    .then(response => {
+      if (response.status === 302) {
+        // Navigate to the redirected URL
+        window.location.href = response.url;  
+      } else {
+        console.error('Error: /process_data unexpected response code', response.status);
+      }
+    })
     .catch(error => {
       console.error('Error: /process_data ', error);
     });
