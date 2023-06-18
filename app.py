@@ -180,7 +180,7 @@ def add_security_headers(resp):
         frame-src https://accounts.google.com/gsi/; 
         style-src 'self' https://accounts.google.com/gsi/style fonts.googleapis.com;
         connect-src 'self' https://accounts.google.com/gsi/;
-        font-src 'self' fonts.gstatic.com;
+        font-src 'self' fonts.gstatic.com data:;
     """.replace('\n', ' ')
 
     # To allow Sign In With Google button and/or Google One Tap to function well with popup windows
