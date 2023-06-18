@@ -316,7 +316,7 @@ def results():
 #     render_template("results.html")
 
 
-@app.route('/process_data', methods=["POST"])
+@app.route('/process_data', methods=["GET", "POST"])
 def process_data():
     data = request.get_json()
 
