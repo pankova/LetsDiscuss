@@ -69,7 +69,7 @@ def create_user_partner_link():
 def db_update_user(user):
     partner_id = user.partner_id
 
-    if is_user_registered and not partner_id:
+    if is_user_registered() and not partner_id:
         return
     
     name = user.name
@@ -196,7 +196,7 @@ def get_client_id():
 @app.route("/", methods=["GET"])
 def home():
     if is_local_computer():
-        mock_user = User("Tom", "123456789", 1)
+        mock_user = User("Megan", "12345")
         save_user(mock_user)
             
     return render_template("index.html")
@@ -267,7 +267,7 @@ def questions():
                 question_id,
                 answer
             )
-        return render_template("results.html")        
+        return redirect(url_for('results'))        
 
 
 @app.route("/results", methods=["GET"])

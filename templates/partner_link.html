@@ -8,20 +8,25 @@ Partner's Invite
 
 <script type="module" src="{{ url_for('static', filename='js/partner_link.js') }}"></script>
 
-<div class="mb-3">
+<div>
 
-    <p>Nice to meet you, {{ name }}! 
-        
-        <br><br>Below is your unique link that you can share with your partner. Once both of you have completed the questionnaire, you'll be able to compare and discuss your answers together.</p>
-    <p id="partner-link">{{ link }}</p>
+    <h2>Nice to meet you, {{ name }}!</h2>
+        <p>Below is your unique link that you can share with your partner. Once both of you have completed the
+        questionnaire, you'll be able to compare and discuss your answers together.
+    </p>
+    <div class="text-row">
+        <p id="partner-link" class="text-link">{{ link }}</p>
+        <button class="secondary-small-button" id="copy-btn">Copy</button>
+    </div>
+      
     <p class="text-muted">Share the link with your partner and engage in a meaningful conversation together</p>
-
-    <button class="btn btn-primary btn-sm" id="copy-btn">Copy</button>
 
 </div>
 
-<form action="/questions" method="get">
-    <button class="btn btn-primary" type="submit">Next</button>
-</form>
+<div>
+    <form action="/questions" method="get">
+        <button class="primary-button" type="submit">Next</button>
+    </form>
+</div>
 
 {% endblock %}
