@@ -176,10 +176,11 @@ def save_user(user):
 def add_security_headers(resp):
     # To secure your app and prevent cross-site scripting (XSS) attacks
     resp.headers['Content-Security-Policy'] = """
-        script-src 'self' https://cdn.jsdelivr.net https://accounts.google.com/gsi/client; 
+        script-src 'self' https://accounts.google.com/gsi/client; 
         frame-src https://accounts.google.com/gsi/; 
-        style-src 'self' https://accounts.google.com/gsi/style https://cdn.jsdelivr.net;
+        style-src 'self' https://accounts.google.com/gsi/style fonts.googleapis.com;
         connect-src 'self' https://accounts.google.com/gsi/;
+        font-src 'self' fonts.gstatic.com;
     """.replace('\n', ' ')
 
     # To allow Sign In With Google button and/or Google One Tap to function well with popup windows
