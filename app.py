@@ -318,7 +318,6 @@ def results():
 
 @app.route('/process_data', methods=['POST'])
 def process_data():
-    assert request.method == "POST"
     data = request.get_json()
 
     jwt_token = data.get('token')
