@@ -214,7 +214,7 @@ def save_partner(partner_hash):
     session["user_partner_id"] = partner_id
 
 
-@app.route("/partner_hash>", methods=["GET"])
+@app.route("/partner=<partner_hash>", methods=["GET"])
 def handle_partner(partner_hash):
     save_partner(partner_hash)
     return redirect("/")
