@@ -322,7 +322,6 @@ def process_data():
 
     jwt_token = data.get('token')
     print(f"jwt_token python: {jwt_token}")
-    return data
 
     if jwt_token is None:
         print(f"Error: jwt_token is None")
