@@ -319,6 +319,8 @@ def results():
 @app.route('/process_data', methods=["POST"])
 def process_data():
     data = request.get_json()
+    data = jsonify(data)
+    return data
 
     jwt_token = data.get('token')
     if jwt_token is None:

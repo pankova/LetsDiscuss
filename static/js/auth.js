@@ -2,7 +2,7 @@ function handleCredentialResponse(response) {
   console.log("Encoded JWT ID token: " + response.credential);
 
   const data = {
-    'token': response.credential
+    "token": "response.credential
   };
   console.log("handleCredentialResponse response.credential: ", response.credential);
   const body = JSON.stringify(data);
@@ -11,21 +11,33 @@ function handleCredentialResponse(response) {
   fetch('/process_data', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
     },
     body: body
   })
     .then(response => {
-      // if (response.status === 302 || response.status === 200) {
-        // Navigate to the redirected URL
-        window.location.href = response.url;  
-      // } else {
-      //   console.error('Error: /process_data unexpected response code', response.status);
-      // }
-    })
-    .catch(error => {
-      console.error('Error: /process_data ', error);
-    });
+      if (response.ok) {
+        return res.json()
+      } else {
+        alert("something is wrong")
+      }
+    }).then(jsonResponse => {
+
+      // Log the response data in the console
+      console.log(jsonResponse)
+    }
+    ).catch((err) => console.error(err));
+  //   // if (response.status === 302 || response.status === 200) {
+  //     // Navigate to the redirected URL
+  //     window.location.href = response.url;  
+  //   // } else {
+  //   //   console.error('Error: /process_data unexpected response code', response.status);
+  //   // }
+  // })
+  // .catch(error => {
+  //   console.error('Error: /process_data ', error);
+  // });
 }
 
 window.onload = function () {
