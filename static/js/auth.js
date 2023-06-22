@@ -18,14 +18,14 @@ function handleCredentialResponse(response) {
   })
     .then(response => {
       if (response.ok) {
-        return res.json()
+        return response.json();
       } else {
-        alert("something is wrong")
+        alert("something is wrong");
       }
     }).then(jsonResponse => {
 
       // Log the response data in the console
-      console.log(jsonResponse)
+      console.log("jsonResponse:", jsonResponse);
     }
     ).catch((err) => console.error(err));
   //   // if (response.status === 302 || response.status === 200) {
