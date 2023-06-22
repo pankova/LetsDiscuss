@@ -4,13 +4,16 @@ function handleCredentialResponse(response) {
   const data = {
     'token': response.credential
   };
+  console.log("handleCredentialResponse response.credential: ", response.credential);
+  body = JSON.stringify(data);
+  console.log("handleCredentialResponse body: ", body);
 
   fetch('/process_data', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data)
+    body: body
   })
     .then(response => {
       // if (response.status === 302 || response.status === 200) {
