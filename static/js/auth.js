@@ -2,7 +2,7 @@ function handleCredentialResponse(response) {
   console.log("Encoded JWT ID token: " + response.credential);
 
   const data = {
-    "token": "response.credential
+    "token": response.credential
   };
   console.log("handleCredentialResponse response.credential: ", response.credential);
   const body = JSON.stringify(data);
