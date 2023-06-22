@@ -203,20 +203,20 @@ def home():
     return render_template("index.html")
 
 
-def db_user_id_by(hash):
+def db_user_id_by(user_hash):
     return get_subscript(
-        get_element(db.execute("SELECT id FROM users WHERE hash=? LIMIT 1", hash), 0),
+        get_element(db.execute("SELECT id FROM users WHERE hash=? LIMIT 1", user_hash), 0),
         'id'
     )
 
-def save_partner(partner_hash):
-    partner_id = db_user_id_by(hash)
+def save_partner(user_hash):
+    partner_id = db_user_id_by(user_hash)
     session["user_partner_id"] = partner_id
 
 
-@app.route("/partner=<partner_hash>", methods=["GET"])
-def handle_partner(partner_hash):
-    save_partner(partner_hash)
+@app.route("/partner=<user_hash>", methods=["GET"])
+def handle_partner(user_hash):
+    save_partner(user_hash)
     return redirect("/")
 
 
