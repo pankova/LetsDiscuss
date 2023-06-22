@@ -109,10 +109,6 @@ div {
   margin-right: 10px; 
 }
 
-.td-left {
-  text-align: left;
-}
-
 table {
   width: 90%;
   border-collapse: collapse;
@@ -130,7 +126,7 @@ th {
   padding: 1rem;
   text-align: center;
   border: 1px solid var(--border-color); 
-  font-weight: normal;
+  font-weight: bold;
   font-size: 18px;
 }
 
@@ -145,6 +141,7 @@ thead {
 td {
   padding: 0.5rem;
   border: 1px solid var(--border-color); 
+  text-align: left;
 }
 
 label {
