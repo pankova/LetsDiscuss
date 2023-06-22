@@ -335,7 +335,10 @@ def process_data():
         user_partner_id = get_subscript(session, "user_partner_id")
         user = User(user_name, user_hash, user_partner_id)
         save_user(user)
-        return redirect(url_for('partner_link'))
+        if "user_partner_id" in session:
+            return redirect(url_for('questions'))
+        else:
+            return redirect(url_for('partner_link'))
         
     except ValueError as error:
         # Invalid token
