@@ -5,7 +5,7 @@ function handleCredentialResponse(response) {
     'token': response.credential
   };
   console.log("handleCredentialResponse response.credential: ", response.credential);
-  body = JSON.stringify(data);
+  const body = JSON.stringify(data);
   console.log("handleCredentialResponse body: ", body);
 
   fetch('/process_data', {
