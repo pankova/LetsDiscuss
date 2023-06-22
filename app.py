@@ -332,7 +332,7 @@ def process_data():
         user_name = payload['name']
         user_email = payload['email']
         user_hash = create_user_hash(user_email)
-        user_partner_id = session["user_partner_id"]
+        user_partner_id = get_subscript(session, "user_partner_id")
         user = User(user_name, user_hash, user_partner_id)
         save_user(user)
         return redirect(url_for('partner_link'))
