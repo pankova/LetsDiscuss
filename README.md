@@ -7,6 +7,16 @@
 
 This web-based platform provides thought-provoking questions and scenarios covering various aspects of life, such as decision-making, finances, shared interests, and more. By exploring these topics together, couples can deepen their understanding, strengthen their bond, and navigate important decisions as a team. 
 
+Steps to Use:
+
+1. User register via Google Auth
+2. A partner link is generated
+3. User send the link to their partner to answer questions together and compare their results later
+4. User fill out the questionnaire for topics to discuss
+5. Partner does the same
+6. If both have answered, they can see their answers on the results page. Otherwise they will only see their own answers with question marks for their partner's answers
+7. Once both have answered, they can discuss the suggested topics and their answers
+
 
 ## Tech details
 ```
@@ -19,7 +29,7 @@ Python, Flask, Jinja2, Javascript, Google Auth, HTML, CSS, SQLite
 - auth.js _- methods for Google authorization_
 - partner_link.js _- common UI element with generated partner link for some pages_
 
-Pages
+**Pages**
 - layout.html _- common UI for every page_
 - index.html _- main page_
 
